@@ -17,7 +17,7 @@ def test_watering_system() -> None:
 
     try:
         print("Testing normal watering...")
-        plant_list: list = ["Tomato", "lettuce", "carrots"]
+        plant_list: list = ["tomato", "lettuce", "carrots"]
         water_plants(plant_list)
         print("Watering completed successfully!\n")
 
