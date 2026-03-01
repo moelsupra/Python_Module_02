@@ -1,48 +1,46 @@
-def ft_different_errors() -> None:
+def garden_operations() -> None:
     print("=== Garden Error Types Demo ===\n")
 
-    print("Testing ValueError...")
     try:
+        print("Testing ValueError...")
         int("abc")
     except ValueError:
         print("Caught ValueError: invalid literal for int()\n")
 
-    print("Testing ZeroDivisionError...")
     try:
+        print("Testing ZeroDivisionError...")
         10 / 0
     except ZeroDivisionError:
         print("Caught ZeroDivisionError: division by zero\n")
 
-    print("Testing FileNotFoundError...")
     try:
-        open("missing.txt", 'r')
+        print("Testing FileNotFoundError...")
+        f = open("missing.txt", 'r')
+        f.close()
     except FileNotFoundError:
         print("Caught FileNotFoundError: No such file 'missing.txt'\n")
 
-    print("Testing KeyError...")
     try:
+        print("Testing KeyError...")
         dic = {"flower": 50, "oak": 40}
         print(dic["missing_plant"])
     except KeyError:
         print("Caught KeyError: 'missing\\_plant'\n")
 
-    print("Testing multiple errors together...")
     try:
+        print("Testing multiple errors together...")
         int("abc")
-    except (ValueError, ZeroDivisionError):
+    except (ValueError, ZeroDivisionError, FileNotFoundError, KeyError):
         print("Caught an error, but program continues!\n")
 
 
 def test_error_types() -> None:
-    ft_different_errors()
+    garden_operations()
     print("All error types tested successfully!")
 
 
-if __name__ == "__main__":  # Entry-point check
-    test_error_types()
-
-# Catch a base exception class
-# try:
-#     pass
-# except Exception as e:
-#     print(f"Error: {e}")
+if __name__ == "__main__":
+    try:
+        test_error_types()
+    except Exception as e:
+        print(e)

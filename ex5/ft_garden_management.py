@@ -17,7 +17,7 @@ class GardenManager:
     def add_plant(self, plant_name: str) -> None:
         if not plant_name:
             raise PlantError("Plant name cannot be empty!")
-        self.plants.append(plant_name)
+        self.plants += [plant_name]
         print(f"Added {plant_name} successfully")
 
     def water_plants(self) -> None:
@@ -34,19 +34,28 @@ class GardenManager:
                      water_level: int,
                      sunlight_hours: int) -> None:
         if water_level > 10:
-            raise ValueError(
+            raise WaterError(
                 f"Water level {water_level} is too high (max 10)"
             )
+        if water_level < 1:
+            raise WaterError(
+                f"Water level {water_level} is too low (min 1)"
+            )
         if sunlight_hours < 2:
-            raise ValueError(
+            raise PlantError(
                 f"Sunlight hours {sunlight_hours} is too low (min 2)"
+            )
+        if sunlight_hours > 12:
+            raise PlantError(
+                f"Sunlight hours {sunlight_hours} is too high (max 12)"
             )
         print(f"{plant_name}: healthy "
               f"(water: {water_level}, sun: {sunlight_hours})")
 
 
 def test_garden_management() -> None:
-    print("=== Garden Management System ===\n")
+    print("=== Garden Management System ===")
+    print()
 
     manager = GardenManager()
 
@@ -62,13 +71,15 @@ def test_garden_management() -> None:
     manager.water_plants()
 
     print("\nChecking plant health...")
+
     try:
         manager.check_health("tomato", 5, 8)
-    except ValueError as e:
+    except GardenError as e:
         print(f"Error checking tomato: {e}")
+
     try:
         manager.check_health("lettuce", 15, 8)
-    except ValueError as e:
+    except GardenError as e:
         print(f"Error checking lettuce: {e}")
 
     print("\nTesting error recovery...")
@@ -76,10 +87,14 @@ def test_garden_management() -> None:
         raise WaterError("Not enough water in tank")
     except GardenError as e:
         print(f"Caught GardenError: {e}")
+    finally:
         print("System recovered and continuing...")
 
     print("\nGarden management system test complete!")
 
 
 if __name__ == "__main__":
-    test_garden_management()
+    try:
+        test_garden_management()
+    except Exception as e:
+        print(e)

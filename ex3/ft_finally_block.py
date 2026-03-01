@@ -3,7 +3,7 @@ def water_plants(plant_list: list) -> None:
     try:
         for plant in plant_list:
             if not plant:
-                raise TypeError("Cannot water None - invalid plant!")
+                raise TypeError(f"Cannot water {plant} - invalid plant!")
             print(f"Watering {plant}")
     except TypeError as e:
         print(f"Error: {e}")
@@ -12,18 +12,26 @@ def water_plants(plant_list: list) -> None:
 
 
 def test_watering_system() -> None:
-    print("=== Garden Watering System ===\n")
+    print("=== Garden Watering System ===")
+    print()
 
-    print("Testing normal watering...")
-    plant_l: list = ["Tomato", "lettuce", "carrots"]
-    water_plants(plant_l)
-    print("Watering completed successfully!\n")
+    try:
+        print("Testing normal watering...")
+        plant_list: list = ["Tomato", "lettuce", "carrots"]
+        water_plants(plant_list)
+        print("Watering completed successfully!\n")
 
-    print("Testing with error...")
-    plant_l: list = ["tomato", None, "carrots"]
-    water_plants(plant_l)
-    print("\nCleanup always happens, even with errors!")
+        print("Testing with error...")
+        plant_list_with_errors: list = ["tomato", None, "carrots"]
+        water_plants(plant_list_with_errors)
+    except Exception as e:
+        print(e)
+    finally:
+        print("\nCleanup always happens, even with errors!")
 
 
 if __name__ == "__main__":
-    test_watering_system()
+    try:
+        test_watering_system()
+    except Exception as e:
+        print(f"caught error{e}")

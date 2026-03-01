@@ -11,14 +11,14 @@ class WaterError(GardenError):
 
 
 def custom_errors() -> None:
-    print("Testing PlantError...")
     try:
+        print("Testing PlantError...")
         raise PlantError("The tomato plant is wilting!")
     except PlantError as e:
         print(f"Caught PlantError: {e}\n")
 
-    print("Testing WaterError...")
     try:
+        print("Testing WaterError...")
         raise WaterError("Not enough water in the tank!")
     except WaterError as e:
         print(f"Caught WaterError: {e}\n")
@@ -35,10 +35,14 @@ def custom_errors() -> None:
 
 
 def test_custom_errors() -> None:
-    print("=== Custom Garden Errors Demo ===\n")
+    print("=== Custom Garden Errors Demo ===")
+    print()
     custom_errors()
     print("\nAll custom error types work correctly!")
 
 
 if __name__ == "__main__":
-    test_custom_errors()
+    try:
+        test_custom_errors()
+    except Exception as e:
+        print(e)
